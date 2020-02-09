@@ -64,4 +64,11 @@ public interface RoleDao {
 	 * @return
 	 */
 	Role checkRoleName(String roleName);
+	/**
+	 * 
+	 * @Title: getCount 
+	 * @Description:(查询出表中数据的数量)
+	 * @return
+	 */
+	Integer getCount();
 }

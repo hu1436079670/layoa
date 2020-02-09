@@ -17,7 +17,6 @@ import com.situ.layoa.role.domain.Role;
 public interface RoleService {
 
 	/**
-	 * 
 	 * @Title: saveRole 
 	 * @Description:(新增角色信息)
 	 * @param role
@@ -25,14 +24,12 @@ public interface RoleService {
 	 */
 	Long saveRole(Role role);
 	/**
-	 * 
 	 * @Title: deleteRole 
 	 * @Description:(删除角色信息)
 	 * @param rowId
 	 */
-	void deleteRole(Long rowId);
+	Long deleteRole(Long rowId);
 	/**
-	 * 
 	 * @Title: updateRole 
 	 * @Description:(修改角色信息)
 	 * @param role
@@ -40,14 +37,12 @@ public interface RoleService {
 	 */
 	Long updateRole(Role role);
 	/**
-	 * 
 	 * @Title: findAllRole 
 	 * @Description:(查询全部角色信息)
 	 * @return
 	 */
 	List<Role> findAllRole();
 	/**
-	 * 
 	 * @Title: getOneRole 
 	 * @Description:(查询单个角色信息)
 	 * @param rowId
@@ -55,11 +50,17 @@ public interface RoleService {
 	 */
 	Role getOneRole(Long rowId);
 	/**
-	 * 
 	 * @Title: checkRoleName 
 	 * @Description:(检测角色名称是否唯一)
 	 * @param roleName
 	 * @return
 	 */
 	Integer checkRoleName(String roleName);
+	/**
+	 * 
+	 * @Title: getCount 
+	 * @Description:(查询表中数据的数量)
+	 * @return
+	 */
+	Integer getCount();
 }

@@ -19,7 +19,7 @@ import com.situ.layoa.role.service.RoleService;
 
 /** 
  * @ClassName:RoleServiceImpl 
- * @Description:(这里用一句话描述这个类的作用)  
+ * @Description:(RoleServiceImpl)  
  */
 @Service
 public class RoleServiceImpl implements Serializable, RoleService {
@@ -37,57 +37,56 @@ public class RoleServiceImpl implements Serializable, RoleService {
 	 */
 	@Override
 	public Long saveRole(Role role) {
-		role.setRoleCode("11111");
 		role.setActiveFlag(1);
 		role.setCreateBy("admin");
 		role.setCreateDate(new Date());
 		return roleDao.save(role);
 	}
 
-	/** 
+	/**
 	 * @Title: deleteRole 
-	 * @Description:(这里用一句话描述这个方法的作用)
-	 * @param rowId  
+	 * @Description:(删除角色信息)
+	 * @param rowId
 	 */
 	@Override
-	public void deleteRole(Long rowId) {
-		// TODO Auto-generated method stub
-
+	public Long deleteRole(Long rowId) {
+		roleDao.delete(rowId);
+		return 1L;
 	}
 
-	/** 
+	/**
 	 * @Title: updateRole 
-	 * @Description:(这里用一句话描述这个方法的作用)
+	 * @Description:(修改角色信息)
 	 * @param role
-	 * @return  
+	 * @return
 	 */
 	@Override
 	public Long updateRole(Role role) {
-		// TODO Auto-generated method stub
-		return null;
+		role.setUpdateBy("newA");
+		role.setUpdateDate(new Date());
+		roleDao.update(role);
+		return 1L;
 	}
 
-	/** 
+	/**
 	 * @Title: findAllRole 
-	 * @Description:(这里用一句话描述这个方法的作用)
-	 * @return  
+	 * @Description:(查询全部角色信息)
+	 * @return
 	 */
 	@Override
 	public List<Role> findAllRole() {
-		// TODO Auto-generated method stub
-		return null;
+		return roleDao.find();
 	}
 
-	/** 
+	/**
 	 * @Title: getOneRole 
-	 * @Description:(这里用一句话描述这个方法的作用)
+	 * @Description:(查询单个角色信息)
 	 * @param rowId
-	 * @return  
+	 * @return
 	 */
 	@Override
 	public Role getOneRole(Long rowId) {
-		// TODO Auto-generated method stub
-		return null;
+		return roleDao.get(rowId);
 	}
 	
 	/**
@@ -101,10 +100,21 @@ public class RoleServiceImpl implements Serializable, RoleService {
 	public Integer checkRoleName(String roleName) {
 		Role role = roleDao.checkRoleName(roleName);
 		int bool = 0;
-		if(role!=null) {
+		if(role==null) {
 			bool = 1;
 		}
 		return bool;
+	}
+
+	/**
+	 * 
+	 * @Title: getCount 
+	 * @Description:(查询表中数据的数量)
+	 * @return
+	 */
+	@Override
+	public Integer getCount() {
+		return roleDao.getCount();
 	}
 
 }

@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <title>角色新增</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>开始使用layui</title>
 <!-- 引用layui的样式表 -->
 <link rel="stylesheet" href="assert/layui/css/layui.css">
 </head>
@@ -45,7 +44,7 @@
 </body>
 <script type="text/javascript" src="assert/layui/layui.js"></script>
 <!-- 书写自己的脚本 -->
-<script type="text/javascript" src="">
+<script type="text/javascript">
 		//layui.use 当页面渲染成功后，加载配置的模板
 		layui.use([ 'layer', 'form' ], function() {
 			//通过一个变量将加载的模本取出
