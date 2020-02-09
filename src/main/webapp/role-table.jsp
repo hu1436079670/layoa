@@ -100,6 +100,8 @@ layui.use(['table','form'], function(){
 	    			success:function(result){
 	    				if(result){
 	    					layer.msg("已删除。");
+	    					//重新加载表格数据 #'demo'	<table id="demo">
+	    					table.reload("#demo");
 	    				}
 	    			}
 	    		});
