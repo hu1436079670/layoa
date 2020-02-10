@@ -8,7 +8,7 @@ package com.situ.layoa.role.domain;
 
 import java.io.Serializable;
 
-import com.situ.layoa.commons.BaseClass;
+import com.situ.layoa.commons.base.domain.BaseClass;
 
 /** 
  * @ClassName:Role 

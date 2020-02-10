@@ -37,6 +37,7 @@ public class RoleServiceImpl implements Serializable, RoleService {
 	 */
 	@Override
 	public Long saveRole(Role role) {
+		//role.setRoleCode(roleCode);
 		role.setActiveFlag(1);
 		role.setCreateBy("admin");
 		role.setCreateDate(new Date());
@@ -99,11 +100,7 @@ public class RoleServiceImpl implements Serializable, RoleService {
 	@Override
 	public Integer checkRoleName(String roleName) {
 		Role role = roleDao.checkRoleName(roleName);
-		int bool = 0;
-		if(role==null) {
-			bool = 1;
-		}
-		return bool;
+		return role == null ? 1 : 0;
 	}
 
 	/**

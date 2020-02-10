@@ -4,7 +4,7 @@
  * @Author:胡鑫卓   
  * @Date:2020年2月6日 下午5:06:35     
  */ 
-package com.situ.layoa.commons;
+package com.situ.layoa.commons.base.domain;
 
 import java.io.Serializable;
 import java.util.Date;

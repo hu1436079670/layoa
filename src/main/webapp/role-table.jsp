@@ -4,14 +4,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>layui-table</title>
+<title>角色管理</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!-- 引用layui的样式表 -->
 <link rel="stylesheet" href="assert/layui/css/layui.css">
 </head>
 <body>
-	<button type="button" class="layui-btn" id="btn_add" >新增</button>
-	<table id="demo" lay-filter="table_role"></table>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space15">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						角色管理
+						<!-- 新增按钮-开始 -->
+						<button type="button" class="layui-btn layui-btn-sm layui-btn-add" id="btn_add" >
+							<i class="layui-icon layui-icon-addition"></i>新增
+						</button>
+					</div>	
+					<div class="layui-card-body">
+						<!-- 搜索表单-开始 -->
+						<form class="layui-form" id="form_search">
+							<div class="layui-search-form">
+								<div class="layui-inline">
+									<select name="roleKind">
+										<option value>角色类型</option>
+										<option value="0">普通角色</option>
+										<option value="1">超级角色</option>
+									</select>
+								</div>
+								<div class="layui-inline">
+									<input name="roleName" placeholder="角色名称" autocomplete="off" class="layui-input"> 
+								</div>
+								<div class="layui-inline">
+									<!-- 搜索按钮-开始 -->
+									<button class="layui-btn layui-btn-primary layui-btn-sm" layui-submit layui-filter="btn_search" >
+										<i class="layui-icon layui-icon-search"></i>
+									</button>
+									<!-- 搜索按钮-结束 -->
+									<!-- 重置按钮-开始 -->
+									<button type="reset" class="layui-btn layui-btn-primary layui-btn-sm" >
+										<i class="layui-icon layui-icon-refresh"></i>
+									</button>
+									<!-- 重置按钮-结束 -->
+								</div>
+							</div>
+						</form>
+						<!-- 搜索表单-结束 -->
+					</div>
+						<!-- 新增按钮-结束 -->
+						<!-- 页面表格-开始 -->
+						<table id="demo" lay-filter="table_role"></table>
+						<!-- 页面表格-结束 -->
+				</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/html" id="roleKindTpl">
   		{{#  if(d.roleKind == 1){ }}
 				<span class="layui-badge layui-bg-orange">超级用户</span>
@@ -31,108 +78,5 @@
 	</script>
 </body>
 <script type="text/javascript" src="assert/layui/layui.js"></script>
-<script type="text/javascript">
-layui.use(['table','form'], function(){
-	  var $ = layui.$;
-	  //取得layui的table模板
-	  var table = layui.table;
-	  var form = layui.form;
-	  //通过render方法开始渲染table的数据
-	  table.render({
-	    elem: '#demo'//要绑定的页面元素
-	    ,height: 312//设置高度
-	    ,url: 'role/find' //数据接口
-	    ,page: true //开启分页
-	    ,limit:2//	每页的数据量	默认：10；自定义：2
-	    ,cols: [[ //表头
-	      {field: 'rowId', title: 'ID', width:80, sort: true, fixed: 'left'}
-	      ,{field: 'roleCode', title: '角色编号', width:120}
-	      ,{field: 'roleName', title: '角色名称', width:120}
-	      ,{field: 'roleKind', title: '角色类型', width:120, templet:'#roleKindTpl'} 
-	      ,{field: 'roleInfo', title: '角色简介', width:120} 
-	      ,{field: '', title: '操作', width:140, templet:'#roleBtnTpl'} 	
-	      /*  ,{field: 'experience', title: '积分', width: 80, sort: true}
-	      ,{field: 'score', title: '评分', width: 80, sort: true}
-	      ,{field: 'classify', title: '职业', width: 80}
-	      ,{field: 'wealth', title: '财富', width: 135, sort: true} */
-	    ]]
-	  });
-	//监听工具条 
-	  table.on('tool(table_role)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-	    var data = obj.data; //获得当前行数据
-	    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-	    //var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-		//通过data将要修改的数据的主键   取出
-		var rowId = data.rowId;
-	    switch(layEvent){
-	    case 'edit':
-	    	//console.log("准备执行 修改");
-	    	$.ajax({
-	    		type:'put',
-	    		url:'role/'+rowId,
-	    		success:function(role){
-	    			 if(role){
-	    				$('#roleCode').val(role.roleCode);
-	    				$('#userName').val(role.roleName);
-	    				$('#roleKind').val(role.roleKind);
-	    				$('#roleInfo').val(role.roleInfo);
-	    				$('#rowId').val(role.rowId);
-	    				layer.open({
-	  					  type:1,//1:页面层
-	  					  title:'修改角色',
-	  					  area:'800px',//设置高度，高度自适应
-	  					 content:htmlData,//这里content是一个DOM。注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-	  					  success:function(){//layer打开成功后的回调
-	  						  //让form表单渲染一下。form_role_add_edit=<form lay-filter="form_role_add_edit">
-	  						  form.render(null,'form_role_add_edit');
-	  					  }
-	  				  });
-	    			} 
-	    		}
-	    	});
-	    	break;
-	    case 'delete':
-	    	//让用户再确认一次
-	    	if(layer.confirm('你确定要删除吗？')){
-	    		$.ajax({
-	    			type:'delete',
-	    			url:'role/'+rowId,
-	    			success:function(result){
-	    				if(result){
-	    					layer.msg("已删除。");
-	    					//重新加载表格数据 #'demo'	<table id="demo">
-	    					table.reload("#demo");
-	    				}
-	    			}
-	    		});
-	    	}
-	    	break;	
-	    default:
-	    	break;
-	    }
-	  });
-	  //绑定新增 按钮
-	  $('#btn_add').on('click',function(){
-		  //alert('ttt');
-		  $.ajax({
-			  type:'post',
-			  url:'role/goadd',
-			  success:function(htmlData){
-				  //console.log(htmlData);
-				  layer.open({
-					  type:1,//1:页面层
-					  title:'新增角色',
-					  area:'800px',//设置高度，高度自适应
-					  content:htmlData,//这里content是一个DOM。注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-					  success:function(){//layer打开成功后的回调
-						  //让form表单渲染一下。form_role_add_edit=<form lay-filter="form_role_add_edit">
-						  form.render(null,'form_role_add_edit');
-					  }
-				  });
-			  }
-		  });
-	  });
-	
-	});
-</script>
+<script type="text/javascript" src="assert/pages/role/role.js"></script>
 </html>

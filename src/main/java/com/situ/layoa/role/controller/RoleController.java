@@ -43,36 +43,44 @@ public class RoleController implements Serializable {
 	//@DeleteMapping method = 'delete' 删除动作
 	//@GetMapping    method = 'get'   查询动作
 	
+
 	/**
-	 * @Title: goUpdateRole 
-	 * @Description:(进入修改)
-	 * @param rowId
+	 * @Title: findAllRole
+	 * @Description:(根据分页查询角色的数据)
+	 * @param page  请求的页号 1
+	 * @param limit 每页的数据量 10
 	 * @return
 	 */
-	@PutMapping("/{rowId}")
-	public Role goUpdateRole(Long rowId) {
-		return roleService.getOneRole(rowId);
+	@GetMapping("/{page}/{limit}")
+	public LayResult findAllRole(@PathVariable Integer page,@PathVariable Integer limit) {
+		// System.out.println(page);
+		// System.out.println(limit);
+		// 查询出表中数据的数量
+		Integer count = roleService.getCount();
+		// 模拟进行了分页
+		List<Role> roleList = roleService.findAllRole();
+		return new LayResult(0, "", roleList, count);
 	}
 	/**
-	 * @Title: doUpdateROle 
-	 * @Description:(执行 修改角色信息)
-	 * @param role
+	 * @Title: checkRoleName
+	 * @Description:(检测角色名称是否唯一)
+	 * @param roleName
 	 * @return
 	 */
-	@PutMapping
-	public Long doUpdateROle(Role role) {
-		return roleService.updateRole(role);
+	@GetMapping("/{roleName}")
+	public Integer checkRoleName(String roleName) {
+		return roleService.checkRoleName(roleName);
 	}
-	
 	/**
-	 * @Title: doDeleteRole 
-	 * @Description:(删除角色信息)
-	 * @param rowId
+	 * @Title: goAdd 
+	 * @Description:(进入新增或修改页面)
+	 * @param modelAndView
 	 * @return
 	 */
-	@DeleteMapping("/{rowId}")
-	public Long doDeleteRole(Long rowId) {
-		return roleService.deleteRole(rowId);
+	@GetMapping("/goadd")
+	public ModelAndView goAddOrEdit(ModelAndView modelAndView) {
+		modelAndView.setViewName(ROLE_FORM_ADD);
+		return modelAndView;
 	}
 	/**
 	 * @Title: doAddRole
@@ -84,45 +92,34 @@ public class RoleController implements Serializable {
 	public Long doAddRole(Role role) {
 		return roleService.saveRole(role);
 	}
-
 	/**
-	 * @Title: checkRoleName
-	 * @Description:(检测角色名称是否唯一)
-	 * @param roleName
+	 * @Title: doDeleteRole 
+	 * @Description:(删除角色信息)
+	 * @param rowId
 	 * @return
 	 */
-	@GetMapping("{roleName}")
-	public Integer checkRoleName(String roleName) {
-		int bool = roleService.checkRoleName(roleName);
-		return bool;
-	}
-
-	/**
-	 * @Title: findAllRole
-	 * @Description:(根据分页查询角色的数据)
-	 * @param page  请求的页号 1
-	 * @param limit 每页的数据量 10
-	 * @return
-	 */
-	@GetMapping("/find/{page}/{limit}")
-	public LayResult findAllRole(@PathVariable Integer page,@PathVariable Integer limit) {
-		// System.out.println(page);
-		// System.out.println(limit);
-		// 查询出表中数据的数量
-		Integer count = roleService.getCount();
-		// 模拟进行了分页
-		List<Role> roleList = roleService.findAllRole();
-		return new LayResult(0, "", roleList, count);
+	@DeleteMapping("/{rowId}")
+	public Long doDeleteRole(@PathVariable Long rowId) {
+		return roleService.deleteRole(rowId);
 	}
 	/**
-	 * @Title: goAdd 
-	 * @Description:(进入新增)
-	 * @param modelAndView
+	 * @Title: goUpdateRole 
+	 * @Description:(进入修改)
+	 * @param rowId
 	 * @return
 	 */
-	@PostMapping("/goadd")
-	public ModelAndView goAdd(ModelAndView modelAndView) {
-		modelAndView.setViewName(ROLE_FORM_ADD);
-		return modelAndView;
+	@PutMapping("/{rowId}")
+	public Role goUpdateRole(@PathVariable Long rowId) {
+		return roleService.getOneRole(rowId);
+	}
+	/**
+	 * @Title: doUpdateROle 
+	 * @Description:(执行 修改角色信息)
+	 * @param role
+	 * @return
+	 */
+	@PutMapping
+	public Long doUpdateROle(Role role) {
+		return roleService.updateRole(role);
 	}
 }
