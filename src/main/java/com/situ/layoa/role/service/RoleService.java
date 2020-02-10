@@ -8,6 +8,7 @@ package com.situ.layoa.role.service;
 
 import java.util.List;
 
+import com.situ.layoa.commons.LayResult;
 import com.situ.layoa.role.domain.Role;
 
 /** 
@@ -57,10 +58,19 @@ public interface RoleService {
 	 */
 	Integer checkRoleName(String roleName);
 	/**
-	 * 
 	 * @Title: getCount 
 	 * @Description:(查询表中数据的数量)
+	 * @param searchRole
 	 * @return
 	 */
-	Integer getCount();
+	Integer getCount(Role searchRole);
+	/**
+	 * @Title: findRoleByPage 
+	 * @Description:(根据分页查询数据)
+	 * @param page		页号
+	 * @param limit		每页显示的条数
+	 * @param searchRole	查询条件的数据
+	 * @return
+	 */
+	LayResult findRoleByPage(Integer page,Integer limit,Role searchRole);
 }

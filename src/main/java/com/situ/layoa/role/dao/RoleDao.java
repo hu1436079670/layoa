@@ -7,8 +7,12 @@
 package com.situ.layoa.role.dao;
 
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.situ.layoa.commons.Pagination;
 import com.situ.layoa.commons.base.dao.BaseDao;
 import com.situ.layoa.role.domain.Role;
 
@@ -29,9 +33,18 @@ public interface RoleDao extends BaseDao<Role> {
 	Role checkRoleName(String roleName);
 	/**
 	 * 
+	 * @param searchParam 
 	 * @Title: getCount 
 	 * @Description:(查询出表中数据的数量)
 	 * @return
 	 */
-	Integer getCount();
+	Integer getCount(Role searchParam);
+	/**
+	 * @Title: findByPage 
+	 * @Description:(根据分页查询数据)
+	 * @param pagination
+	 * @param searchRole
+	 * @return
+	 */
+	List<Role> findByPage(@Param("pagination") Pagination pagination,@Param("searchRole") Role searchRole);
 }

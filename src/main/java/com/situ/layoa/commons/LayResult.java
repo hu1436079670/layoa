@@ -7,6 +7,9 @@
 package com.situ.layoa.commons;
 
 import java.io.Serializable;
+import java.util.List;
+
+import com.situ.layoa.role.domain.Role;
 
 /**
  * @ClassName:LayResult
@@ -20,7 +23,8 @@ public class LayResult implements Serializable {
 	private String msg;// 结果消息，如果不成功 请书写原因
 	private Object data;// 返回的结果，可以是任意的类型
 	private Integer count;// 数据总量
-
+	private List<Role> roleList;
+	
 	public LayResult() {
 
 	}
@@ -38,6 +42,14 @@ public class LayResult implements Serializable {
 		this.msg = msg;
 		this.data = data;
 		this.count = count;
+	}
+
+	public LayResult(Integer code, String msg, Object data, List<Role> roleList) {
+		super();
+		this.code = code;
+		this.msg = msg;
+		this.data = data;
+		this.roleList = roleList;
 	}
 
 	public Integer getCode() {
@@ -70,6 +82,14 @@ public class LayResult implements Serializable {
 
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
 	}
 
 }
